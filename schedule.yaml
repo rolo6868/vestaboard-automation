@@ -8,7 +8,7 @@
 #   enabled:    false = keep on file, out of rotation
 #
 # Game days (UK football / men's basketball) are handled automatically in config.yaml:
-# a GAME DAY frame joins the rotation, then the board hands off to Vestaboard+ live scores.
+# a GAME DAY frame joins the rotation, then the board becomes a live scoreboard (ESPN feed).
 
 rotation:
   - id: test

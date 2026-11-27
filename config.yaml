@@ -19,8 +19,9 @@ active_hours:
   end: "22:00"
 
 # Game days: Kentucky football + men's basketball (ESPN schedule feed).
-# From pregame_minutes before start until game_minutes after, the rotation pauses so the
-# Vestaboard+ live-score channels own the board. Earlier that day a GAME DAY frame joins the rotation.
+# From pregame_minutes before start until game_minutes after, the board becomes a live
+# scoreboard (ESPN feed, updates every run, final score held to window end), even past active_hours.
+# Earlier that day a GAME DAY frame joins the rotation.
 sports:
   enabled: true
   team_id: 96            # Kentucky Wildcats on ESPN

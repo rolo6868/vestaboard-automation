@@ -35,7 +35,7 @@ python preview.py --date 2026-12-05              # preview.html with board mocku
 ## Limits to remember
 
 - Vestaboard drops messages sent less than about 15 seconds apart, so no animation.
-- If Vestaboard+ channels are also scheduled, they'll overwrite this rotation. Turn them off, or
-  keep them to hours outside `active_hours`.
+- Vestaboard+ isn't needed, because game-day live scores come from ESPN. If Vestaboard+ is ever reactivated,
+  its saved channels (Morning Coffee, Brunch, Lunch, Afternoon coffee, Dinner) will fight this rotation.
 - The repo is public, so Actions minutes are free. (A private repo on the free plan would get 2,000 minutes a month; this schedule would need about
   6,000.) The token stays in encrypted secrets and never appears in the code.
