@@ -5,6 +5,7 @@ on:
     # Every 5 minutes, 11:00-05:59 UTC = roughly 6/7 AM to 12/1 AM Eastern (late hours only matter during games).
     # The script itself enforces active_hours in config.yaml, so DST shifts don't matter.
     # GitHub may start scheduled runs a few minutes late; the rotation tolerates that.
+    # (Schedule re-registered 2026-11-27.)
     - cron: "*/5 0-5,11-23 * * *"
   workflow_dispatch:
     inputs:
