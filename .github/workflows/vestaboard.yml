@@ -46,3 +46,4 @@ jobs:
           if [ -n "$FRAME" ]; then args+=(--frame "$FRAME"); fi
           if [ "$DRY_RUN" = "true" ]; then args+=(--dry-run); fi
           python send.py "${args[@]}"
+# schedule enabled by Rollie
