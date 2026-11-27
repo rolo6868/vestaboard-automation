@@ -91,6 +91,24 @@ def layout_text(text: str, rows: int, cols: int, align: str = "center",
     return grid
 
 
+def bordered(lines: list[str], rows: int, cols: int, top: str, side: str = "",
+             bottom: str | None = None) -> str:
+    """Build grid-frame source: a colored top/bottom row pattern, optional side tiles, centered text."""
+    def pattern(p: str) -> str:
+        return (p * cols)[:cols]
+    side = side or ""
+    inner_w = cols - 2 * len(side[:1])
+    body_rows = rows - 2
+    body = [""] * ((body_rows - len(lines)) // 2) + list(lines)
+    body += [""] * (body_rows - len(body))
+    out = [pattern(top)]
+    for ln in body:
+        s = side[:1]
+        out.append(s + ln.center(inner_w) + s)
+    out.append(pattern(bottom if bottom is not None else top))
+    return "\n".join(out)
+
+
 def load_frame(spec: dict, frames_dir: Path, rows: int, cols: int) -> list[list[int]]:
     """A schedule entry references either `frame: file.txt` (grid art) or `text: ...`."""
     name = spec.get("id", "?")
@@ -99,6 +117,8 @@ def load_frame(spec: dict, frames_dir: Path, rows: int, cols: int) -> list[list[
         if not path.exists():
             raise FrameError(f"{name}: frame file not found: {path}")
         return parse_grid(path.read_text(encoding="utf-8"), rows, cols, name=spec["frame"])
+    if "grid" in spec:  # generated on the fly (e.g. game day)
+        return parse_grid(spec["grid"], rows, cols, name=name)
     if "text" in spec:
         return layout_text(str(spec["text"]), rows, cols,
                            align=spec.get("align", "center"),

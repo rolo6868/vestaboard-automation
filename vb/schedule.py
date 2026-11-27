@@ -88,6 +88,12 @@ def pick(entries: list[dict], cfg: dict, now: dt.datetime) -> dict | None:
         return None
     top = max(int(e.get("priority", 0)) for e in pool)
     pool = [e for e in pool if int(e.get("priority", 0)) == top]
+    # weight: 2 means the entry gets two turns per cycle (spread out, not back to back)
+    weighted = []
+    max_w = max(int(e.get("weight", 1)) for e in pool)
+    for rnd in range(max_w):
+        weighted += [e for e in pool if int(e.get("weight", 1)) > rnd]
+    pool = weighted
     minutes_today = now.hour * 60 + now.minute
     slot = (now.toordinal() * 1440 + minutes_today) // int(cfg["slot_minutes"])
     return pool[slot % len(pool)]

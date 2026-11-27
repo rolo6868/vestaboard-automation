@@ -1,7 +1,0 @@
-# Example art frame (cup + text). Copy this pattern for new designs.
-  w w
- w w         FRESH
-ooooooo      COFFEE
-ooooooooo   BREWING
-ooooooo o
- ooooo

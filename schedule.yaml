@@ -1,31 +1,144 @@
-# What rotates on the board, and when.
+# What rotates on the board, and when. (Dining room Flagship)
 #
-# Each entry is one "frame". Every slot (see slot_minutes in config.yaml) the board shows
-# the next eligible entry. Fields:
-#   id:        unique name (required)
-#   frame:     a file in frames/ with tile art   -- OR --
-#   text:      plain text; auto-wrapped and centered (align: left|center|right, valign: top|middle|bottom)
-#   days:      [mon, tue, wed, thu, fri, sat, sun]   default: every day
-#   start/end: "07:00" / "11:00"                     default: all day
-#   from/until: 2026-12-01 / 2026-12-24              default: always (inclusive dates)
-#   priority:  higher number wins; only the top-priority eligible entries rotate.
-#              Use it for takeovers (e.g. a holiday announcement at priority 10).
-#   enabled:   false keeps the entry on file but out of rotation
+#   id:         unique name            frame: file in frames/   (or text: "...")
+#   days:       [mon..sun]             default every day
+#   start/end:  "06:00" / "16:00"      default all day
+#   from/until: 2026-12-01             inclusive dates, default always
+#   priority:   higher wins outright   weight: extra turns per cycle (default 1)
+#   enabled:    false = keep on file, out of rotation
+#
+# Game days (UK football / men's basketball) are handled automatically in config.yaml:
+# a GAME DAY frame joins the rotation, then the board hands off to Vestaboard+ live scores.
 
 rotation:
-  # Used only for the connection test (send.py --frame test). Never rotates.
   - id: test
     frame: test-connection.txt
     enabled: false
 
-  # Examples showing the format. Disabled until real content replaces them.
-  - id: example-art
-    frame: example-coffee-cup.txt
-    enabled: false
+  # ---------- Funky Rooster: coffee bar hours (6 AM - 4 PM) ----------
+  - id: fr-welcome
+    frame: fr-welcome.txt
+    start: "06:00"
+    end: "16:00"
+    weight: 2
+  - id: art-sunrise
+    frame: art-sunrise.txt
+    start: "06:00"
+    end: "10:00"
+  - id: art-coffee-cup
+    frame: art-coffee-cup.txt
+    start: "06:00"
+    end: "16:00"
+  - id: fr-pastries
+    frame: fr-pastries.txt
+    start: "06:00"
+    end: "12:00"
+  - id: fr-coffeelab
+    frame: fr-coffeelab.txt
+    start: "06:00"
+    end: "16:00"
+  - id: fr-seasonal
+    frame: fr-seasonal.txt
+    start: "06:00"
+    end: "16:00"
+  - id: fr-coffee-for-here
+    frame: fr-coffee-for-here.txt   # update weekly with the new series drink
+    start: "06:00"
+    end: "16:00"
+  - id: fr-cans
+    frame: fr-cans.txt
+    start: "06:00"
+    end: "16:00"
 
-  - id: example-text
-    text: "Weekday breakfast is here. 7 to 11 AM, Mon-Fri"
+  # ---------- Funky Rooster: all day ----------
+  - id: fr-roasted
+    frame: fr-roasted.txt
+  - id: fr-beans
+    frame: fr-beans.txt
+  - id: fr-subscription
+    frame: fr-subscription.txt
+  - id: fr-catering
+    frame: fr-catering.txt
+  - id: fr-instagram
+    frame: fr-instagram.txt
+  - id: fr-blackfriday
+    frame: fr-blackfriday.txt
+    until: 2026-11-30
+    weight: 2
+
+  # ---------- Char: dayparts ----------
+  - id: char-welcome
+    frame: char-welcome.txt
+  - id: char-breakfast
+    frame: char-breakfast.txt
     days: [mon, tue, wed, thu, fri]
-    start: "06:30"
+    start: "06:00"
     end: "11:00"
-    enabled: false
+    weight: 2
+  - id: char-brunch
+    frame: char-brunch.txt
+    days: [sat, sun]
+    start: "06:00"
+    end: "14:00"
+    weight: 2
+  - id: char-lunch
+    frame: char-lunch.txt
+    days: [mon, tue, wed, thu, fri]
+    start: "10:00"
+    end: "14:00"
+    weight: 2
+  - id: char-dinner-week
+    frame: char-dinner-week.txt
+    days: [sun, mon, tue, wed, thu]
+    start: "14:00"
+    end: "21:00"
+    weight: 2
+  - id: char-dinner-weekend
+    frame: char-dinner-weekend.txt
+    days: [fri, sat]
+    start: "14:00"
+    end: "22:00"
+    weight: 2
+  - id: char-cocktails
+    frame: char-cocktails.txt
+    start: "15:00"
+    end: "22:00"
+  - id: char-wine-wed
+    frame: char-wine-wed.txt
+    days: [wed]
+    start: "10:00"
+    end: "22:00"
+    weight: 2
+  - id: char-reservations
+    frame: char-reservations.txt
+    start: "14:00"
+    end: "22:00"
+  - id: art-patio-fire
+    frame: art-patio-fire.txt
+    start: "16:00"
+    end: "22:00"
+    until: 2027-02-28
+
+  # ---------- Holiday season ----------
+  - id: hol-giftcards
+    frame: hol-giftcards.txt
+    until: 2026-12-31
+    weight: 2
+  - id: hol-cakes
+    frame: hol-cakes.txt
+    until: 2026-12-22
+  - id: hol-truffles
+    frame: hol-truffles.txt
+    until: 2026-12-22
+  - id: hol-parties
+    frame: hol-parties.txt
+    until: 2026-12-20
+  - id: art-holiday-tree
+    frame: art-holiday-tree.txt
+    from: 2026-12-01
+    until: 2026-12-31
+  - id: hol-nye
+    frame: hol-nye.txt
+    from: 2026-12-10
+    until: 2026-12-31
+    weight: 2

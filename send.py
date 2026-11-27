@@ -20,7 +20,8 @@ import time
 import urllib.error
 import urllib.request
 
-from vb.board import SIZES, FrameError, load_frame
+from vb.board import SIZES, FrameError, bordered, load_frame
+from vb.sports import gameday_frame_text, games_today, in_game_window
 from vb.schedule import (ROOT, load_config, load_schedule, now_local, pick,
                          within_active_hours)
 
@@ -106,6 +107,17 @@ def main() -> int:
         if not within_active_hours(cfg, now):
             print(f"{now:%a %H:%M} is outside active hours. Nothing sent.")
             return 0
+        for g in games_today(cfg, now):
+            label = f"{g['away'].get('abbreviation')} at {g['home'].get('abbreviation')} {g['start']:%I:%M %p}"
+            if in_game_window(cfg, g, now):
+                print(f"Game window ({label}, {g['state']}): board handed to Vestaboard+ live scores. Nothing sent.")
+                return 0
+            if now < g["start"]:
+                entries.append({
+                    "id": f"gameday-{g['kind']}",
+                    "grid": bordered(gameday_frame_text(g, cols), rows, cols, top="bw", side="b"),
+                    "weight": int((cfg.get("sports") or {}).get("gameday_weight", 2)),
+                })
         entry = pick(entries, cfg, now)
         if not entry:
             print(f"{now:%a %Y-%m-%d %H:%M}: no eligible entries. Nothing sent.")

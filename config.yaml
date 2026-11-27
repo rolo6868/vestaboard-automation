@@ -18,6 +18,21 @@ active_hours:
   start: "07:00"
   end: "22:00"
 
+# Game days: Kentucky football + men's basketball (ESPN schedule feed).
+# From pregame_minutes before start until game_minutes after, the rotation pauses so the
+# Vestaboard+ live-score channels own the board. Earlier that day a GAME DAY frame joins the rotation.
+sports:
+  enabled: true
+  team_id: 96            # Kentucky Wildcats on ESPN
+  leagues:
+    - football/college-football
+    - basketball/mens-college-basketball
+  pregame_minutes: 30
+  game_minutes:
+    football: 240
+    basketball: 150
+  gameday_weight: 2      # GAME DAY frame gets 2 turns per rotation cycle
+
 # Optional flap animation. style: classic | wave | drift | curtain, speed: gentle | fast
 # transition:
 #   style: wave
