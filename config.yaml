@@ -1,0 +1,24 @@
+# Vestaboard automation settings
+
+# Master switch. While false, the scheduled job runs but sends nothing,
+# so it can't overwrite what's on the board. Flip to true once content is loaded.
+enabled: false
+
+timezone: America/New_York
+
+# flagship = 6 rows x 22 columns, note = 3 rows x 15 columns
+board_size: flagship
+
+# How long each rotation slot lasts. Must match the cron in
+# .github/workflows/vestaboard.yml (currently every 20 minutes).
+slot_minutes: 20
+
+# Board only changes inside these hours (local time). Outside them it holds the last frame.
+active_hours:
+  start: "07:00"
+  end: "22:00"
+
+# Optional flap animation. style: classic | wave | drift | curtain, speed: gentle | fast
+# transition:
+#   style: wave
+#   speed: gentle

@@ -1,0 +1,7 @@
+# Test frame. Lowercase r o y g b v w k = color tiles, * = filled, space or _ = blank.
+roygbvroygbvroygbvroyg
+v                    r
+v  AUTOMATION TEST   r
+v   CONNECTION OK!   r
+v                    r
+gyorvbgyorvbgyorvbgyor

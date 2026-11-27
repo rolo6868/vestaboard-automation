@@ -1,0 +1,47 @@
+name: Vestaboard rotation
+
+on:
+  schedule:
+    # Every 20 minutes, 11:00-03:59 UTC = roughly 6/7 AM to 10/11 PM Eastern year-round.
+    # The script itself enforces active_hours in config.yaml, so DST shifts don't matter.
+    # GitHub may start scheduled runs a few minutes late; the rotation tolerates that.
+    - cron: "*/20 0-3,11-23 * * *"
+  workflow_dispatch:
+    inputs:
+      frame:
+        description: "Send one entry by id right now (e.g. test). Leave blank for the scheduled frame."
+        required: false
+        default: ""
+      dry_run:
+        description: "Dry run (show what would be sent, send nothing)"
+        type: boolean
+        default: false
+
+concurrency:
+  group: vestaboard
+  cancel-in-progress: false
+
+jobs:
+  send:
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install -q -r requirements.txt
+      - name: Validate content
+        # Flags broken frames in the run log without stopping the rotation.
+        continue-on-error: true
+        run: python send.py --validate
+      - name: Send to Vestaboard
+        env:
+          VESTABOARD_TOKEN: ${{ secrets.VESTABOARD_TOKEN }}
+          FRAME: ${{ inputs.frame }}
+          DRY_RUN: ${{ inputs.dry_run }}
+        run: |
+          args=()
+          if [ -n "$FRAME" ]; then args+=(--frame "$FRAME"); fi
+          if [ "$DRY_RUN" = "true" ]; then args+=(--dry-run); fi
+          python send.py "${args[@]}"

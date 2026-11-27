@@ -1,0 +1,31 @@
+# What rotates on the board, and when.
+#
+# Each entry is one "frame". Every slot (see slot_minutes in config.yaml) the board shows
+# the next eligible entry. Fields:
+#   id:        unique name (required)
+#   frame:     a file in frames/ with tile art   -- OR --
+#   text:      plain text; auto-wrapped and centered (align: left|center|right, valign: top|middle|bottom)
+#   days:      [mon, tue, wed, thu, fri, sat, sun]   default: every day
+#   start/end: "07:00" / "11:00"                     default: all day
+#   from/until: 2026-12-01 / 2026-12-24              default: always (inclusive dates)
+#   priority:  higher number wins; only the top-priority eligible entries rotate.
+#              Use it for takeovers (e.g. a holiday announcement at priority 10).
+#   enabled:   false keeps the entry on file but out of rotation
+
+rotation:
+  # Used only for the connection test (send.py --frame test). Never rotates.
+  - id: test
+    frame: test-connection.txt
+    enabled: false
+
+  # Examples showing the format. Disabled until real content replaces them.
+  - id: example-art
+    frame: example-coffee-cup.txt
+    enabled: false
+
+  - id: example-text
+    text: "Weekday breakfast is here. 7 to 11 AM, Mon-Fri"
+    days: [mon, tue, wed, thu, fri]
+    start: "06:30"
+    end: "11:00"
+    enabled: false
