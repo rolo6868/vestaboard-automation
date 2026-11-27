@@ -2,7 +2,7 @@
 
 # Master switch. While false, the scheduled job runs but sends nothing,
 # so it can't overwrite what's on the board. Flip to true once content is loaded.
-enabled: false
+enabled: true
 
 timezone: America/New_York
 
