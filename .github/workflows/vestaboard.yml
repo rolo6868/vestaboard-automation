@@ -2,10 +2,10 @@ name: Vestaboard rotation
 
 on:
   schedule:
-    # Every 20 minutes, 11:00-03:59 UTC = roughly 6/7 AM to 10/11 PM Eastern year-round.
+    # Every 5 minutes, 11:00-03:59 UTC = roughly 6/7 AM to 10/11 PM Eastern year-round.
     # The script itself enforces active_hours in config.yaml, so DST shifts don't matter.
     # GitHub may start scheduled runs a few minutes late; the rotation tolerates that.
-    - cron: "*/20 0-3,11-23 * * *"
+    - cron: "*/5 0-3,11-23 * * *"
   workflow_dispatch:
     inputs:
       frame:

@@ -1,7 +1,7 @@
 # Vestaboard automation
 
 Pushes a scheduled rotation of frames (tile art and text) to the Vestaboard through the
-Vestaboard Cloud API. It runs on GitHub Actions every 20 minutes, so your computer doesn't need to be on.
+Vestaboard Cloud API. It runs on GitHub Actions every 5 minutes, so your computer doesn't need to be on.
 
 ## How it works
 
@@ -37,5 +37,5 @@ python preview.py --date 2026-12-05              # preview.html with board mocku
 - Vestaboard drops messages sent less than about 15 seconds apart, so no animation.
 - If Vestaboard+ channels are also scheduled, they'll overwrite this rotation. Turn them off, or
   keep them to hours outside `active_hours`.
-- On a free GitHub plan, a private repo gets 2,000 Actions minutes a month. The current schedule uses about
-  1,500. A shorter rotation needs a paid plan or a public repo.
+- The repo is public, so Actions minutes are free. (A private repo on the free plan would get 2,000 minutes a month; this schedule would need about
+  6,000.) The token stays in encrypted secrets and never appears in the code.

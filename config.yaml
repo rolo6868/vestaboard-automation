@@ -10,8 +10,8 @@ timezone: America/New_York
 board_size: flagship
 
 # How long each rotation slot lasts. Must match the cron in
-# .github/workflows/vestaboard.yml (currently every 20 minutes).
-slot_minutes: 20
+# .github/workflows/vestaboard.yml (currently every 5 minutes).
+slot_minutes: 5
 
 # Board only changes inside these hours (local time). Outside them it holds the last frame.
 active_hours:
